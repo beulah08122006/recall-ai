@@ -1,0 +1,28 @@
+{
+  "name": "recall-ai-root",
+  "version": "1.0.0",
+  "description": "Recall AI — Your life, remembered. Personal memory and intelligent organization system.",
+  "scripts": {
+    "build": "npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix backend",
+    "start": "node --experimental-strip-types backend/src/server.ts",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "test:backend": "cd backend && node --experimental-strip-types src/tests/api.test.ts"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "keywords": [
+    "personal-memory",
+    "productivity",
+    "ai-assistant",
+    "reminders",
+    "borrowed-lent",
+    "departure-checklist"
+  ],
+  "author": "Recall AI Team",
+  "license": "MIT"
+}
+
