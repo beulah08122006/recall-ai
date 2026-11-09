@@ -78,7 +78,11 @@ app.use(errorHandler);
 async function bootstrap() {
   try {
     await connectDB();
-    await seedDemoData(false);
+    try {
+      await seedDemoData(false);
+    } catch (seedErr: any) {
+      console.warn('[Seed Warning] Could not auto-seed demo data:', seedErr.message);
+    }
     app.listen(config.port, () => {
       console.log(`===============================================`);
       console.log(`🧠 Recall AI Server is running on port ${config.port}`);

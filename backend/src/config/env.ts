@@ -1,5 +1,25 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Robust .env resolution: checks backend/.env relative to this file, then working directory
+const backendEnvPath = path.resolve(__dirname, '../../.env');
+const explicitBackendEnv = path.resolve(process.cwd(), 'backend/.env');
+const cwdEnvPath = path.resolve(process.cwd(), '.env');
+
+if (existsSync(backendEnvPath)) {
+  dotenv.config({ path: backendEnvPath });
+} else if (existsSync(explicitBackendEnv)) {
+  dotenv.config({ path: explicitBackendEnv });
+} else if (existsSync(cwdEnvPath)) {
+  dotenv.config({ path: cwdEnvPath });
+} else {
+  dotenv.config();
+}
 
 export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
@@ -8,4 +28,5 @@ export const config = {
   geminiApiKey: process.env.GEMINI_API_KEY || '',
   isProduction: process.env.NODE_ENV === 'production',
 };
+
 

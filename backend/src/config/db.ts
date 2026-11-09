@@ -60,9 +60,10 @@ async function trySpawnLocalMongod(): Promise<boolean> {
 
 export async function connectDB(): Promise<void> {
   try {
+    const isAtlas = config.mongoUri.includes('mongodb+srv://');
     console.log(`[Database] Connecting to MongoDB at ${maskMongoUri(config.mongoUri)}...`);
     await mongoose.connect(config.mongoUri, {
-      serverSelectionTimeoutMS: config.isProduction ? 10000 : 2500,
+      serverSelectionTimeoutMS: isAtlas || config.isProduction ? 10000 : 2500,
     });
     console.log('[Database] Connected to MongoDB successfully! 🧠');
   } catch (initialErr: any) {
