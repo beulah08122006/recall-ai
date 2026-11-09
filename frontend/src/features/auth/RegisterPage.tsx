@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Brain, Lock, Mail, User as UserIcon, ArrowRight } from 'lucide-react';
+import { Brain, Lock, Mail, User as UserIcon, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../hooks/useToast';
 import { Input } from '../../components/ui/Input';
@@ -64,6 +64,22 @@ export const RegisterPage: React.FC = () => {
 
         {/* Card */}
         <div className="bg-white rounded-2xl border border-[#D9DED2] p-8 shadow-xs">
+          {/* Portfolio Demo Banner */}
+          <div className="mb-5 p-3 rounded-xl bg-[#F4F6EE] border border-[#C4D5B0] flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#526F52] shrink-0" />
+              <span className="text-xs text-[#26332C]">
+                Here for a portfolio showcase?
+              </span>
+            </div>
+            <Link
+              to="/login"
+              className="text-xs font-semibold text-[#183C36] bg-[#C4D5B0] hover:bg-[#b5c79e] px-2.5 py-1 rounded-lg transition-colors whitespace-nowrap"
+            >
+              1-Click Demo →
+            </Link>
+          </div>
+
           <h2 className="text-lg font-semibold text-[#26332C] mb-1">Create Account</h2>
           <p className="text-xs text-[#7C877D] mb-6">Set up your secure personal memory system</p>
 

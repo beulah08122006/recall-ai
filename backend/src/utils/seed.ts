@@ -11,16 +11,18 @@ import { Routine } from '../models/Routine.ts';
 import { ChatMessage } from '../models/ChatMessage.ts';
 import { hashPassword } from './password.ts';
 
-async function seed() {
-  console.log('[Seed] Connecting to database...');
-  await connectDB();
-
+export async function seedDemoData(force = false) {
   const demoEmail = 'demo@recall.ai';
-  console.log(`[Seed] Checking for existing user: ${demoEmail}`);
   let user = await User.findOne({ email: demoEmail });
 
+  if (user && !force) {
+    return;
+  }
+
+  console.log('[Seed] Initializing demo account for showcase...');
+
   if (user) {
-    console.log('[Seed] Clearing existing demo data for clean demonstration...');
+    console.log('[Seed] Refreshing existing demo data for clean demonstration...');
     user.name = 'Beulah';
     await user.save();
     const userId = user._id;
@@ -319,12 +321,16 @@ async function seed() {
   console.log('📧 Demo Login: demo@recall.ai');
   console.log('🔑 Password:   RecallDemo2026!');
   console.log('===============================================\n');
-
-  process.exit(0);
 }
 
-seed().catch((err) => {
-  console.error('[Seed Error] Failed to seed database:', err);
-  process.exit(1);
-});
+// Allow standalone CLI execution: node --experimental-strip-types src/utils/seed.ts
+if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('seed.ts')) {
+  connectDB()
+    .then(() => seedDemoData(true))
+    .then(() => process.exit(0))
+    .catch((err) => {
+      console.error('[Seed Error] Failed to seed database:', err);
+      process.exit(1);
+    });
+}
 

@@ -5,6 +5,7 @@ import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { config } from './config/env.ts';
 import { connectDB } from './config/db.ts';
+import { seedDemoData } from './utils/seed.ts';
 import { errorHandler } from './middleware/errorHandler.ts';
 
 // Routes
@@ -77,6 +78,7 @@ app.use(errorHandler);
 async function bootstrap() {
   try {
     await connectDB();
+    await seedDemoData(false);
     app.listen(config.port, () => {
       console.log(`===============================================`);
       console.log(`🧠 Recall AI Server is running on port ${config.port}`);
